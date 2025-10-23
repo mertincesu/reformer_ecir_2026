@@ -32,10 +32,9 @@ pip install torch transformers vllm pandas tqdm
 ### Directory Structure
 
 ```
-baseline/
+baselines/
 ├── mugi/
 │   ├── mugi.py              # GPU version (vLLM)
-│   └── mugi_local.py        # Local version (transformers)
 ├── lamer/
 │   └── lamer.py             # Unified (supports both --env gpu/local)
 ├── qa-expand/
