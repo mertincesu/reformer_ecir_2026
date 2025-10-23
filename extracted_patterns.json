@@ -1,0 +1,86 @@
+[
+    {
+      "pattern_name": "Semantic Clarification",
+      "description": "Clarifies ambiguous terms or actions to make the query more specific and understandable.",
+      "transformation_rule": "Replace vague or ambiguous terms with more precise and contextually relevant terms.",
+      "examples": [
+        ["weather in prague in may", "temperature in prague in may"],
+        ["ponds brand is which company", "who is pond's parent company"]
+      ]
+    },
+    {
+      "pattern_name": "Contextual Expansion",
+      "description": "Expands the query to include additional context or details that can help refine the search results.",
+      "transformation_rule": "Add relevant contextual information to the original query to make it more specific.",
+      "examples": [
+        ["weather in quito ecuador", "average temperature in quito mexico"],
+        ["elmhurst ny is what county", "what is elmhurst ny's tax"]
+      ]
+    },
+    {
+      "pattern_name": "Generalization",
+      "description": "Broadens the query to cover a wider range of related topics or scenarios.",
+      "transformation_rule": "Replace specific terms with more general ones that encompass a broader category.",
+      "examples": [
+        ["name four countries that have a desert biome", "which kind of desert is found in the nevada desert"]
+      ]
+    },
+    {
+      "pattern_name": "Location Specification",
+      "description": "Clarifies the location or geographical context of the query.",
+      "transformation_rule": "Specify the exact location or region to make the query more targeted.",
+      "examples": [
+        ["weather in quito ecuador", "average temperature in quito mexico"],
+        ["elmhurst ny is what county", "what is elmhurst ny's tax"]
+      ]
+    },
+    {
+      "pattern_name": "Purpose Specification",
+      "description": "Clarifies the purpose or intended use of a product, service, or concept.",
+      "transformation_rule": "Specify the intended use or application to make the query more focused.",
+      "examples": [
+        ["how do i format a timeline in ms-project 2013", "what is the timeline format in microsoft project"]
+      ]
+    },
+    {
+      "pattern_name": "Temporal Adjustment",
+      "description": "Adjusts the temporal aspect of the query to reflect a more accurate or relevant time frame.",
+      "transformation_rule": "Modify the time-related terms to better align with the user's intent.",
+      "examples": [
+        ["when kids start teething", "when should baby start teething"]
+      ]
+    },
+    {
+      "pattern_name": "Conceptual Shift",
+      "description": "Transforms the query by shifting the focus from one concept to a related but different concept.",
+      "transformation_rule": "Replace the main subject or action with a closely related concept that better aligns with the user's intent.",
+      "examples": [
+        ["what is sociometric popularity", "what is sociometric status psychology"]
+      ]
+    },
+    {
+      "pattern_name": "Clarify Intent",
+      "description": "Clarifies the underlying intent or goal of the query to make it more direct and actionable.",
+      "transformation_rule": "Rephrase the query to directly address the user's intended action or information need.",
+      "examples": [
+        ["why goji berries?", "how much do goji berries cost a pound"],
+        ["is the thyroid affected by a hysterectomy", "after thyroid removal do i develop thyroid problems"]
+      ]
+    },
+    {
+      "pattern_name": "Contextual Restriction",
+      "description": "Narrows down the context of the query to a more specific scenario or condition.",
+      "transformation_rule": "Limit the scope of the query by adding constraints or conditions that refine the search results.",
+      "examples": [
+        ["weather in quito ecuador", "average temperature in quito mexico"]
+      ]
+    },
+    {
+      "pattern_name": "Clarify Subject",
+      "description": "Clarifies the main subject of the query to ensure it is accurately represented.",
+      "transformation_rule": "Replace or refine the main subject to better reflect the user's intent.",
+      "examples": [
+        ["ponds brand is which company", "who is pond's parent company"]
+      ]
+    }
+  ]
