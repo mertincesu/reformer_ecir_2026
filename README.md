@@ -180,47 +180,12 @@ python3 flan-qr.py \
 
 ---
 
-## Running on SLURM (GPU)
-
-### Setting Up Environment (Zeus/Artemis)
-
-```bash
-# Set HuggingFace cache directory
-export HF_HOME=/mnt/data/$USER/hf_cache
-export TRANSFORMERS_CACHE=/mnt/data/$USER/hf_cache
-export HUGGINGFACE_HUB_CACHE=/mnt/data/$USER/hf_cache
-
-# Create cache directory
-mkdir -p /mnt/data/$USER/hf_cache
-```
-
----
+## Running on GPU (vLLM)
 
 ### 1. MuGI (GPU)
 
-Create `run_mugi.sh`:
-
 ```bash
-#!/bin/bash
-#SBATCH --job-name=mugi
-#SBATCH --output=mugi_%j.out
-#SBATCH --error=mugi_%j.err
-#SBATCH --partition=gpu
-#SBATCH --gres=gpu:1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=32G
-#SBATCH --time=24:00:00
-
-# Set cache directories
-export HF_HOME=/mnt/data/$USER/hf_cache
-export TRANSFORMERS_CACHE=/mnt/data/$USER/hf_cache
-export HUGGINGFACE_HUB_CACHE=/mnt/data/$USER/hf_cache
-
-# Activate environment
-source /mnt/data/$USER/miniconda/bin/activate ollama-py
-
-# Run MuGI
-cd /mnt/data/$USER/llm-query-reformulation/baseline/mugi
+cd baseline/mugi
 
 python3 mugi.py \
   --queries ../data/trecdl2019/queries.tsv \
@@ -230,38 +195,19 @@ python3 mugi.py \
   --adaptive_times 5
 ```
 
-Submit:
-```bash
-sbatch run_mugi.sh
-```
+**Parameters:**
+- `--queries`: Path to query TSV file (qid, query)
+- `--output`: Output TSV file path
+- `--model`: HuggingFace model name (default: Qwen/Qwen2.5-7B-Instruct)
+- `--num_docs`: Number of pseudo-documents to generate (default: 5)
+- `--adaptive_times`: Query repetition weight (default: 5)
 
 ---
 
 ### 2. LameR (GPU)
 
-Create `run_lamer.sh`:
-
 ```bash
-#!/bin/bash
-#SBATCH --job-name=lamer
-#SBATCH --output=lamer_%j.out
-#SBATCH --error=lamer_%j.err
-#SBATCH --partition=gpu
-#SBATCH --gres=gpu:1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=32G
-#SBATCH --time=24:00:00
-
-# Set cache directories
-export HF_HOME=/mnt/data/$USER/hf_cache
-export TRANSFORMERS_CACHE=/mnt/data/$USER/hf_cache
-export HUGGINGFACE_HUB_CACHE=/mnt/data/$USER/hf_cache
-
-# Activate environment
-source /mnt/data/$USER/miniconda/bin/activate ollama-py
-
-# Run LameR
-cd /mnt/data/$USER/llm-query-reformulation/baseline/lamer
+cd baseline/lamer
 
 python3 lamer.py \
   --queries ../data/trecdl2019/queries.tsv \
@@ -271,38 +217,21 @@ python3 lamer.py \
   --env gpu
 ```
 
-Submit:
-```bash
-sbatch run_lamer.sh
-```
+**Parameters:**
+- `--queries`: Path to query TSV file
+- `--collection`: Path to collection file (TSV or JSONL)
+- `--bm25_run`: Path to pre-computed BM25 run file (TREC format)
+- `--output`: Output TSV file path
+- `--env`: `gpu` for vLLM
+- `--num_passages`: Number of pseudo-passages (default: 5)
+- `--debug`: Enable verbose logging (optional)
 
 ---
 
 ### 3. QA-EXPAND (GPU)
 
-Create `run_qa_expand.sh`:
-
 ```bash
-#!/bin/bash
-#SBATCH --job-name=qa_expand
-#SBATCH --output=qa_expand_%j.out
-#SBATCH --error=qa_expand_%j.err
-#SBATCH --partition=gpu
-#SBATCH --gres=gpu:1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=32G
-#SBATCH --time=24:00:00
-
-# Set cache directories
-export HF_HOME=/mnt/data/$USER/hf_cache
-export TRANSFORMERS_CACHE=/mnt/data/$USER/hf_cache
-export HUGGINGFACE_HUB_CACHE=/mnt/data/$USER/hf_cache
-
-# Activate environment
-source /mnt/data/$USER/miniconda/bin/activate ollama-py
-
-# Run QA-EXPAND
-cd /mnt/data/$USER/llm-query-reformulation/baseline/qa-expand
+cd baseline/qa-expand
 
 python3 qa-expand.py \
   --queries ../data/trecdl2019/queries.tsv \
@@ -310,38 +239,21 @@ python3 qa-expand.py \
   --env gpu
 ```
 
-Submit:
-```bash
-sbatch run_qa_expand.sh
-```
+**Parameters:**
+- `--queries`: Path to query TSV file
+- `--output`: Output TSV file path
+- `--model`: Model name (default: Qwen2.5-7B for GPU)
+- `--num_subquestions`: Number of sub-questions (default: 3)
+- `--repeat_query_weight`: Query repetition (default: 3)
+- `--env`: `gpu` for vLLM
+- `--debug`: Enable verbose logging (optional)
 
 ---
 
 ### 4. GenQR-Ensemble (GPU)
 
-Create `run_genqr.sh`:
-
 ```bash
-#!/bin/bash
-#SBATCH --job-name=genqr
-#SBATCH --output=genqr_%j.out
-#SBATCH --error=genqr_%j.err
-#SBATCH --partition=gpu
-#SBATCH --gres=gpu:1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=32G
-#SBATCH --time=24:00:00
-
-# Set cache directories
-export HF_HOME=/mnt/data/$USER/hf_cache
-export TRANSFORMERS_CACHE=/mnt/data/$USER/hf_cache
-export HUGGINGFACE_HUB_CACHE=/mnt/data/$USER/hf_cache
-
-# Activate environment
-source /mnt/data/$USER/miniconda/bin/activate ollama-py
-
-# Run GenQR-Ensemble
-cd /mnt/data/$USER/llm-query-reformulation/baseline/gen-qr-ensemble
+cd baseline/gen-qr-ensemble
 
 python3 gen-qr-ensemble.py \
   --queries ../data/trecdl2019/queries.tsv \
@@ -349,38 +261,20 @@ python3 gen-qr-ensemble.py \
   --env gpu
 ```
 
-Submit:
-```bash
-sbatch run_genqr.sh
-```
+**Parameters:**
+- `--queries`: Path to query TSV file
+- `--output`: Output TSV file path
+- `--model`: Model name (default: Qwen2.5-7B for GPU)
+- `--repeat_query_weight`: Query repetition (default: 5)
+- `--env`: `gpu` for vLLM
+- `--debug`: Enable verbose logging (optional)
 
 ---
 
 ### 5. FlanQR (GPU)
 
-Create `run_flanqr.sh`:
-
 ```bash
-#!/bin/bash
-#SBATCH --job-name=flanqr
-#SBATCH --output=flanqr_%j.out
-#SBATCH --error=flanqr_%j.err
-#SBATCH --partition=gpu
-#SBATCH --gres=gpu:1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=32G
-#SBATCH --time=24:00:00
-
-# Set cache directories
-export HF_HOME=/mnt/data/$USER/hf_cache
-export TRANSFORMERS_CACHE=/mnt/data/$USER/hf_cache
-export HUGGINGFACE_HUB_CACHE=/mnt/data/$USER/hf_cache
-
-# Activate environment
-source /mnt/data/$USER/miniconda/bin/activate ollama-py
-
-# Run FlanQR
-cd /mnt/data/$USER/llm-query-reformulation/baseline/flan-qr
+cd baseline/flan-qr
 
 python3 flan-qr.py \
   --queries ../data/trecdl2019/queries.tsv \
@@ -388,10 +282,17 @@ python3 flan-qr.py \
   --env gpu
 ```
 
-Submit:
-```bash
-sbatch run_flanqr.sh
-```
+**Parameters:**
+- `--queries`: Path to query TSV file
+- `--output`: Output TSV file path
+- `--model`: Model name (default: Qwen2.5-7B for GPU)
+- `--repeat_query_weight`: Query repetition (default: 5)
+- `--env`: `gpu` for vLLM
+- `--debug`: Enable verbose logging (optional)
+
+---
+
+**Note:** GPU execution requires CUDA-compatible GPU and vLLM installation. For SLURM clusters, wrap these commands in appropriate job submission scripts.
 
 ---
 
@@ -467,24 +368,6 @@ qid	expansion_text	expanded_query
 |-------------|-------|------|-------|
 | **Local** (CPU/MPS) | `Qwen/Qwen2.5-1.5B-Instruct` | 1.5B params | Slow (~5-10 min/query) |
 | **GPU** (vLLM) | `Qwen/Qwen2.5-7B-Instruct` | 7B params | Fast (~10-30 sec/query) |
-
----
-
-## Monitoring Jobs (SLURM)
-
-```bash
-# Check job status
-squeue -u $USER
-
-# View output logs
-tail -f <baseline>_<job_id>.out
-
-# View error logs
-tail -f <baseline>_<job_id>.err
-
-# Cancel job
-scancel <job_id>
-```
 
 ---
 
